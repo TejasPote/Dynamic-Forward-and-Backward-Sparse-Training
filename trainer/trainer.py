@@ -35,7 +35,7 @@ class Trainer():
                         if isinstance(layer, MaskedMLP) or isinstance(layer, MaskedConv2d):
                             loss_val += args.alpha * torch.sum(torch.exp(-layer.threshold))
                     if epoch != 1 and idx !=0:
-                        loss_val += beta * var_loss
+                        loss_val += args.beta * var_loss
                 optimizer.zero_grad() 
                 loss_val.backward()
 
