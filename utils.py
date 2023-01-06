@@ -68,7 +68,7 @@ def makedirs(path):
 
 
 
-def print_layer_keep_ratio(model):
+def print_layer_keep_ratio(model, logger):
     total = 0. 
     keep = 0.
     for layer in model.modules():
