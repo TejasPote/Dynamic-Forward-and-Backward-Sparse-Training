@@ -9,6 +9,14 @@ from .layers import MaskedMLP, MaskedConv2d
 
 __all__ = ['masked_vgg']
 
+defaultcfg = {
+    11 : [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512],
+    13 : [64, 64, 'M', 128, 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512],
+    16 : [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512],
+    19 : [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512],
+}
+
+
 
 class masked_vgg(nn.Module):
     def __init__(self, dataset='cifar10', depth=16, init_weights=True, cfg=None):
