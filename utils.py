@@ -66,18 +66,31 @@ def makedirs(path):
 
 
 
-
-
 def print_layer_keep_ratio(model, logger):
     total = 0. 
     keep = 0.
     for layer in model.modules():
-      abs_weight = torch.abs(layer.weight)
-      threshold = layer.threshold.view(abs_weight.shape[0], -1)
-      abs_weight = abs_weight-threshold
-      mask = layer.step(abs_weight)
-      ratio = torch.sum(mask) / mask.numel()
-      total += mask.numel()
-      keep += torch.sum(mask)
-      logger.info("{}, keep ratio {:.4f}".format(layer, ratio))
-    return keep/total
+        if isinstance(layer, MaskedMLP):
+            abs_weight = torch.abs(layer.weight)
+            threshold = layer.threshold.view(abs_weight.shape[0], -1)
+            abs_weight = abs_weight-threshold
+            mask = layer.step(abs_weight)
+            ratio = torch.sum(mask) / mask.numel()
+            total += mask.numel()
+            keep += torch.sum(mask)
+            #logger.info("Layer threshold {:.4f}".format(layer.threshold[0]))
+            logger.info("{}, keep ratio {:.4f}".format(layer, ratio))
+        if isinstance(layer, MaskedConv2d):
+            weight_shape = layer.weight.shape 
+            threshold = layer.threshold.view(weight_shape[0], -1)
+            weight = torch.abs(layer.weight)
+            weight = weight.view(weight_shape[0], -1)
+            weight = weight - threshold
+            mask = layer.step(weight)
+            ratio = torch.sum(mask) / mask.numel()
+            total += mask.numel()
+            keep += torch.sum(mask)
+            #logger.info("Layer threshold {:.4f}".format(layer.threshold[0]))
+            logger.info("{}, keep ratio {:.4f}".format(layer, ratio))
+    logger.info("Model keep ratio {:.4f}".format(keep/total))
+    return keep / total
