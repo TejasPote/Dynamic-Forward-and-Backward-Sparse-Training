@@ -26,7 +26,7 @@ class Trainer():
 
         for epoch in range(1, args.max_epoch+1):
             logger.info("-"*30 + "Epoch start" + "-"*30)
-            for data, label in tr_loader:
+            for idx, (data, label) in enumerate(tr_loader):
                 data, label = data.to(device), label.to(device)        
                 model.train()        
                 output = model(data)
