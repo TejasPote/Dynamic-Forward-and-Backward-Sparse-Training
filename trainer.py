@@ -23,6 +23,7 @@ class Trainer():
         keep_ratio_at_best_acc = 0.
         best_keep_ratio = 1.
         acc_at_best_keep_ratio = 0.
+        var_loss = 0.
 
         for epoch in range(1, args.max_epoch+1):
             logger.info("-"*30 + "Epoch start" + "-"*30)
@@ -31,12 +32,13 @@ class Trainer():
                 model.train()        
                 output = model(data)
                 loss_val = loss(output, label) 
+                
                 if args.mask:
                     for layer in model.modules():
                         if isinstance(layer, MaskedMLP) or isinstance(layer, MaskedConv2d):
                             loss_val += args.alpha * torch.sum(torch.exp(-layer.threshold))
-                    if epoch != 1 and idx !=0:
-                        loss_val += args.beta * var_loss
+                    loss_val += args.beta * var_loss
+                
                 optimizer.zero_grad() 
                 loss_val.backward()
 
