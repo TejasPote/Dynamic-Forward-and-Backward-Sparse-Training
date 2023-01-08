@@ -10,7 +10,7 @@ import torch.backends.cudnn as cudnn
 from train_argument import parser, print_args
 
 from time import time
-from data import get_dataloader
+from data import *
 from utils import * 
 from models import *
 from trainer import *
@@ -65,7 +65,7 @@ def main(args):
     
     kwargs = {'num_workers': 1, 'pin_memory': True} if torch.cuda.is_available() else {}
     train_loader = get_dataloader(args.model, train = True, batch_size = args.batch_size)
-    test_loader = get_dataloader(args.model, train = True, batch_size = args.batch_size)
+    test_loader = get_dataloader(args.model, train = False, batch_size = args.batch_size)
     # if args.dataset == 'cifar10':
     #     train_loader = torch.utils.data.DataLoader(
     #         datasets.CIFAR10('./data.cifar10', train=True, download=True,
