@@ -17,7 +17,7 @@ def parser():
 
     ## Training realted 
     parser.add_argument('--mask', action='store_true', help='whether to use masked model')
-    parser.add_argument('--seed', type=int, default=1, help='The random seed')
+    parser.add_argument('--seed', type=int, default=7, help='The random seed')
     parser.add_argument('--batch_size', '-b', type=int, default=64, help='batch size')
     parser.add_argument('--max_epoch', '-m_e', type=int, default=160, 
         help='the maximum numbers of the model see a sample')
