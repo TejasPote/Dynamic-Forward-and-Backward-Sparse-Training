@@ -3,3 +3,10 @@ Code for the paper 'Dynamic Forward and Backward Sparse Training (DFBST): Accele
 
 Link to paper: https://proceedings.mlr.press/v189/pote23a.html
 
+The following commands can be used to 
+'''
+cd Dynamic-Forward-and-Backward-Sparse-Training/
+'''
+
+
+
